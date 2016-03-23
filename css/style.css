@@ -7,6 +7,7 @@
     width: 100%;
     background-color: rgba(0,0,0,0.5);
     z-index: 10;
+	display: none;
 }
 
 /* just some content with arbitrary styles for explanation purposes */
@@ -23,4 +24,5 @@
     border-radius: 5px;
     text-align: center;
     z-index: 11; /* 1px higher than the overlay layer */
+	display:none;
 }
