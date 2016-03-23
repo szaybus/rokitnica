@@ -7,17 +7,18 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Bootstrap 101 Template</title>
 	<script>
-	function loadDoc() {
+	function loadDoc(id_budynku) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       document.getElementById("own-modal").innerHTML = xhttp.responseText;
     }
   };
-  xhttp.open("GET", "dzialanie.php", true);
+  xhttp.open("GET", "dzialanie.php?id="+id_budynku, true);
   xhttp.send();
 }
-	function openDetails() {
+	function openDetails(id_budynku) {
+		loadDoc(id_budynku);
 		document.getElementById("own-overlay").style.display = "block";
 		document.getElementById("own-modal").style.display = "block";
 	}
@@ -80,7 +81,7 @@
 			<div class="col-md-9" style="background-image: url('img/village_background.png'); background-size:100%">
 			<div style="height:100px"></div>
 			<div class="row">
-			<div class="col-md-2 col-md-offset-4" onclick="openDetails()" style="height:100px;"><img src="img/budynki/cegielnia.png" alt="tekst alternatywny" title="Cegielnia" width="60" height="61"></div>
+			<div class="col-md-2 col-md-offset-4" onclick="openDetails(1)" style="height:100px;"><img src="img/budynki/cegielnia.png" alt="tekst alternatywny" title="Cegielnia" width="60" height="61"></div>
 			<div class="col-md-2" style="height:100px;"><img src="img/budynki/ratusz.png" alt="tekst alternatywny" title="Ratusz" width="60" height="61"></div>
 			</div>
 			<div class="row">
