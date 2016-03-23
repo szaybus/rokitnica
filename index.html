@@ -22,6 +22,11 @@
 		document.getElementById("own-overlay").style.display = "block";
 		document.getElementById("own-modal").style.display = "block";
 	}
+	function closeDetails() {
+
+		document.getElementById("own-overlay").style.display = "none";
+		document.getElementById("own-modal").style.display = "none";
+	}
 	</script>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -77,12 +82,12 @@
 	<div class="container">
 		<div class="row">
 			<div class="own-overlay" id="own-overlay"></div>
-			<div class="own-modal" id="own-modal">I'm the modal window!</div>
+			<div class="own-modal" id="own-modal" onclick="closeDetails()">I'm the modal window!</div>
 			<div class="col-md-9" style="background-image: url('img/village_background.png'); background-size:100%">
 			<div style="height:100px"></div>
 			<div class="row">
 			<div class="col-md-2 col-md-offset-4" onclick="openDetails(1)" style="height:100px;"><img src="img/budynki/cegielnia.png" alt="tekst alternatywny" title="Cegielnia" width="60" height="61"></div>
-			<div class="col-md-2" style="height:100px;"><img src="img/budynki/ratusz.png" alt="tekst alternatywny" title="Ratusz" width="60" height="61"></div>
+			<div class="col-md-2" onclick="openDetails(2)" style="height:100px;"><img src="img/budynki/ratusz.png" alt="tekst alternatywny" title="Ratusz" width="60" height="61"></div>
 			</div>
 			<div class="row">
 			<div class="col-md-2 col-md-offset-2" style="height:100px;"><img src="img/budynki/stajnia.png" alt="tekst alternatywny" title="Stajnia" width="60" height="61"></div>
