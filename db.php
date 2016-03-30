@@ -16,7 +16,12 @@ $wioska = $conn->query("SELECT * FROM `village` WHERE id_village = 1");
 $wioska = $wioska->fetch_assoc();
 var_dump($wioska);
 echo "<br>";
-$budynki = $conn->query("SELECT * FROM `building`");
+$budynki = $conn->query("SELECT * FROM `building` WHERE type = 5");
 $spichlerz = $budynki->fetch_assoc();
 var_dump($spichlerz);
+echo "<br>";
+$budynki = $conn->query("SELECT * FROM `building` WHERE type = 7");
+$zagroda = $budynki->fetch_assoc();
+var_dump($zagroda);
+echo "<br>";
 ?>
