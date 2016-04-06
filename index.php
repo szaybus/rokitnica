@@ -1,4 +1,6 @@
-﻿<?php include "db.php"; ?>
+﻿<?php include "db.php"; 
+	include "village.php";
+$v = new Village();	?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -145,7 +147,8 @@
 				<div class="col-md-8"> Łucznicy </div>
 				<div class="col-md-4"> Ilość </div> -->
 			</div>
-		</div>
+
+	</div>
 	
 	</div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
