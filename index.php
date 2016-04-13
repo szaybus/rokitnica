@@ -1,6 +1,13 @@
 ﻿<?php include "db.php"; 
 	include "village.php";
-$v = new Village();	?>
+$v = new Village($conn);
+
+if(isset($_REQUEST['ulepszBudynekId'])) {
+	$v->upgradeBuilding($_REQUEST['ulepszBudynekId']);
+}
+
+
+	?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -116,13 +123,13 @@ $v = new Village();	?>
 			<h3> Surowce/Wojsko </h3>
 			<table class="table">
 			<tr><th>Nazwa surowca</th><th>Ilosc</th><th>Przyrost /min</th></tr>
-			<tr><td>Jedzenie</td><td><?php echo $wioska['food'].' / '.pow(2, $spichlerz['level'])*100; ?></td>
+			<tr><td>Jedzenie</td><td><?php echo $wioska['food'].' / '.$v->capacity; ?></td>
 				<td><?php echo (pow(2, $zagroda['level'])*15)/60; ?></td></tr>
-			<tr><td>Drewno</td><td><?php echo $wioska['wood'].' / '.pow(2, $spichlerz['level'])*100; ?></td>
+			<tr><td>Drewno</td><td><?php echo $wioska['wood'].' / '.$v->capacity; ?></td>
 				<td>20</td></tr>
-			<tr><td>Zelazo</td><td><?php echo $wioska['iron'].' / '.pow(2, $spichlerz['level'])*100; ?></td>
+			<tr><td>Zelazo</td><td><?php echo $wioska['iron'].' / '.$v->capacity; ?></td>
 				<td>20</td></tr>
-			<tr><td>Glina</td><td><?php echo $wioska['clay'].' / '.pow(2, $spichlerz['level'])*100; ?></td>
+			<tr><td>Glina</td><td><?php echo $wioska['clay'].' / '.$v->capacity; ?></td>
 				<td>20</td></tr>
 			<tr><th>Jednostka</th><th>Liczebnosc</th><th>Morale</th></tr>
 			<tr><td>Pikinierzy</td><td>115/1000</td><td>20</td></tr>
