@@ -36,7 +36,15 @@ class Village {
 			echo '<td>'.$b['name'].'</td>';
 			echo '<td>'.$b['type'].'</td>';
 			echo '<td>'.$b['level'].'</td>';
-			echo '<td><a href="index.php?ulepszBudynekId='.$b['id_building'].'">Ulepsz</a></td>';
+			//sprawdz czy mozemy ulepszyć
+			$foodReq = $b['level']*0;
+			$woodReq = $b['level']*100;
+			$ironReq = $b['level']*50;
+			$clayReq = $b['level']*50;
+			if($this->resources['food'] > $foodReq && $this->resources['wood'] > $woodReq
+			&& $this->resources['iron'] > $ironReq && $this->resources['clay'] > $clayReq) {
+			echo '<td><a href="index.php?ulepszBudynekId='.$b['id_building'].'">Ulepsz</a></td>'; }
+			else { echo '<td>Brak surowców</td>'; }
 			echo '</tr>';
 		}
 		echo '</table>';
@@ -46,19 +54,26 @@ class Village {
 		$q = "SELECT * from building WHERE id_building = ".$_id;
 		$result = $this->db->query($q);
 		$row = $result->fetch_assoc();
-		
-		//zdejmij surowce ze stanu
-		$q = "UPDATE village SET
-			food = food-". $row['level']*0 .",
-			wood = wood-". $row['level']*100 .",
-			iron = iron-". $row['level']*50 .",
-			clay = clay-". $row['level']*50 .";";
-		$this->db->query($q);	
-		//zwiększ level budynku
-		$q = "UPDATE building SET
+		$foodReq = $row['level']*0;
+		$woodReq = $row['level']*100;
+		$ironReq = $row['level']*50;
+		$clayReq = $row['level']*50;
+		if($this->resources['food'] > $foodReq && $this->resources['wood'] > $woodReq
+		&& $this->resources['iron'] > $ironReq && $this->resources['clay'] > $clayReq) {
+			//zdejmij surowce ze stanu
+			$q = "UPDATE village SET
+			food = food-". $foodReq .",
+			wood = wood-". $woodReq .",
+			iron = iron-". $ironReq .",
+			clay = clay-". $clayReq .";";
+			$this->db->query($q);	
+			//zwiększ level budynku
+			$q = "UPDATE building SET
 			level = level+1
 			WHERE id_building=".$_id;
-		$this->db->query($q);
+			$this->db->query($q);
+		}
+		
 	}
 }
 ?>
