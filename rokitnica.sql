@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 04 Kwi 2016, 11:38
+-- Czas generowania: 18 Kwi 2016, 11:22
 -- Wersja serwera: 5.5.42
 -- Wersja PHP: 5.5.28
 
@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `building` (
 --
 
 INSERT INTO `building` (`id_building`, `type`, `level`, `name`) VALUES
-(1, 5, 5, 'Spichlerz'),
-(2, 7, 1, 'Zagroda');
+(1, 5, 9, 'Spichlerz'),
+(2, 7, 4, 'Zagroda');
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `village` (
 --
 
 INSERT INTO `village` (`id_village`, `food`, `wood`, `iron`, `clay`) VALUES
-(1, 200, 300, 400, 500);
+(1, -1650, -1400, -1050, -950);
 
 --
 -- Indeksy dla zrzutów tabel
