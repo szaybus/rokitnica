@@ -73,7 +73,27 @@ class Village {
 			WHERE id_building=".$_id;
 			$this->db->query($q);
 		}
+	}
+	function resourceGain() {
+		$q = "SELECT last_check FROM Village WHERE id_village = 1;";
+		$result = $this->db->query($q);
+		$row = $result->fetch_assoc();
+		//mamy poprzedni refresh w $row['last_check']
+		$last_refresh = strtotime($row['last_check']);
+		$now = strtotime(date("Y-m-d G:i:s"));
+		$delta_time = $now - $last_refresh;
+		echo "Czas: ".$delta_time;
+
+		$this->resources['food'] += 10*$delta_time;
+		$this->resources['wood'] += 10*$delta_time;
+		$this->resources['iron'] += 10*$delta_time;
+		$this->resources['clay'] += 10*$delta_time;
 		
+		$q = "UPDATE Village SET last_check = NOW(), food = ".$this->resources['food'].", 
+			wood = ".$this->resources['wood'].", iron = ".$this->resources['iron'].",
+			clay = ".$this->resources['clay']." WHERE id_village = 1;";
+			echo $q;
+		$this->db->query($q);
 	}
 }
 ?>

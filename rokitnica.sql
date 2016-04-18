@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 18 Kwi 2016, 11:22
+-- Czas generowania: 18 Kwi 2016, 13:21
 -- Wersja serwera: 5.5.42
 -- Wersja PHP: 5.5.28
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `building` (
 
 INSERT INTO `building` (`id_building`, `type`, `level`, `name`) VALUES
 (1, 5, 9, 'Spichlerz'),
-(2, 7, 4, 'Zagroda');
+(2, 7, 5, 'Zagroda');
 
 -- --------------------------------------------------------
 
@@ -52,15 +52,16 @@ CREATE TABLE IF NOT EXISTS `village` (
   `food` int(11) NOT NULL,
   `wood` int(11) NOT NULL,
   `iron` int(11) NOT NULL,
-  `clay` int(11) NOT NULL
+  `clay` int(11) NOT NULL,
+  `last_check` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Zrzut danych tabeli `village`
 --
 
-INSERT INTO `village` (`id_village`, `food`, `wood`, `iron`, `clay`) VALUES
-(1, -1650, -1400, -1050, -950);
+INSERT INTO `village` (`id_village`, `food`, `wood`, `iron`, `clay`, `last_check`) VALUES
+(1, 2970, 2820, 3370, 3470, '2016-04-18 11:19:51');
 
 --
 -- Indeksy dla zrzutów tabel

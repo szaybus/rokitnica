@@ -5,7 +5,7 @@ $v = new Village($conn);
 if(isset($_REQUEST['ulepszBudynekId'])) {
 	$v->upgradeBuilding($_REQUEST['ulepszBudynekId']);
 }
-
+$v->resourceGain();
 
 	?>
 <!DOCTYPE html>
