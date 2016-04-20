@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 18 Kwi 2016, 13:21
+-- Czas generowania: 20 Kwi 2016, 14:13
 -- Wersja serwera: 5.5.42
 -- Wersja PHP: 5.5.28
 
@@ -31,15 +31,18 @@ CREATE TABLE IF NOT EXISTS `building` (
   `type` int(11) NOT NULL,
   `level` int(11) NOT NULL,
   `name` varchar(40) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Zrzut danych tabeli `building`
 --
 
 INSERT INTO `building` (`id_building`, `type`, `level`, `name`) VALUES
-(1, 5, 9, 'Spichlerz'),
-(2, 7, 5, 'Zagroda');
+(1, 5, 2, 'Spichlerz'),
+(2, 7, 3, 'Zagroda'),
+(3, 10, 5, 'Tartak'),
+(4, 3, 3, 'Huta'),
+(5, 2, 2, 'Cegielnia');
 
 -- --------------------------------------------------------
 
@@ -49,10 +52,10 @@ INSERT INTO `building` (`id_building`, `type`, `level`, `name`) VALUES
 
 CREATE TABLE IF NOT EXISTS `village` (
   `id_village` int(11) NOT NULL,
-  `food` int(11) NOT NULL,
-  `wood` int(11) NOT NULL,
-  `iron` int(11) NOT NULL,
-  `clay` int(11) NOT NULL,
+  `food` float NOT NULL,
+  `wood` float NOT NULL,
+  `iron` float NOT NULL,
+  `clay` float NOT NULL,
   `last_check` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
@@ -61,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `village` (
 --
 
 INSERT INTO `village` (`id_village`, `food`, `wood`, `iron`, `clay`, `last_check`) VALUES
-(1, 2970, 2820, 3370, 3470, '2016-04-18 11:19:51');
+(1, 400, 224, 256, 228, '2016-04-20 12:12:42');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -87,7 +90,7 @@ ALTER TABLE `village`
 -- AUTO_INCREMENT dla tabeli `building`
 --
 ALTER TABLE `building`
-  MODIFY `id_building` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id_building` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT dla tabeli `village`
 --

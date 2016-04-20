@@ -7,12 +7,18 @@ class Village {
 	public $db;
 	public $capacity;
 	public $foodGain;
+	public $woodGain;
+	public $ironGain;
+	public $clayGain;
 	function __construct($_db) {
 		$this->db = $_db;
 		$this->getBuildingsFromDB();
 		$this->getResourcesFromDB();
 		$this->capacity = pow(2, $this->buildings[5]['level'])*100;
 		$this->foodGain = pow(2, $this->buildings[7]['level']) * 0.1;
+		$this->woodGain = pow(2, $this->buildings[10]['level']) * 0.1;
+		$this->ironGain = pow(2, $this->buildings[3]['level']) * 0.1;
+		$this->clayGain = pow(2, $this->buildings[2]['level']) * 0.1;
 		
 	}
 	function getBuildingsFromDB() {
@@ -88,10 +94,22 @@ class Village {
 		echo "Czas: ".$delta_time;
 		
 		$this->resources['food'] += $delta_time * $this->foodGain;
-		$this->resources['wood'] += $delta_time * pow(2, $this->buildings[10]['level']) * 0.1;
-		$this->resources['iron'] += $delta_time * pow(2, $this->buildings[3]['level']) * 0.1;
-		$this->resources['clay'] += $delta_time * pow(2, $this->buildings[2]['level']) * 0.1;
+		$this->resources['wood'] += $delta_time * $this->woodGain;
+		$this->resources['iron'] += $delta_time * $this->ironGain;
+		$this->resources['clay'] += $delta_time * $this->clayGain;
 		
+		if($this->resources['food'] > $this->capacity) { //przekroczyliśmy magazyn
+			$this->resources['food'] = $this->capacity;
+		}
+		if($this->resources['wood'] > $this->capacity) { //przekroczyliśmy magazyn
+			$this->resources['wood'] = $this->capacity;
+		}
+		if($this->resources['iron'] > $this->capacity) { //przekroczyliśmy magazyn
+			$this->resources['iron'] = $this->capacity;
+		}
+		if($this->resources['clay'] > $this->capacity) { //przekroczyliśmy magazyn
+			$this->resources['clay'] = $this->capacity;
+		}
 		$q = "UPDATE Village SET last_check = NOW(), food = ".$this->resources['food'].", 
 			wood = ".$this->resources['wood'].", iron = ".$this->resources['iron'].",
 			clay = ".$this->resources['clay']." WHERE id_village = 1;";
