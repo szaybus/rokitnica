@@ -12,6 +12,7 @@ class Village {
 	public $clayGain;
 	function __construct($_db) {
 		$this->db = $_db;
+		$this->checkEvents();
 		$this->getBuildingsFromDB();
 		$this->getResourcesFromDB();
 		$this->capacity = pow(2, $this->buildings[5]['level'])*100;
@@ -92,7 +93,7 @@ class Village {
 			$end = strtotime(date("Y-m-d G:i:s")) + 120;
 			$endTimestamp = date("Y-m-d G:i:s", $end);
 			$q = "INSERT INTO event_building (event_end, id_building) VALUES ('$endTimestamp', $_id)";
-			$this->db($q);
+			$this->db->query($q);
 		}
 	}
 	function resourceGain() {
@@ -123,6 +124,15 @@ class Village {
 			$this->resources['clay'] = $this->capacity;
 		}
 		$this->setResourcesInDB();
+	}
+	function checkEvents() {
+		//pobierz te eventy których czas wykonania już minął
+		$q = "SELECT * FROM event_building WHERE event_end < NOW();";
+		$result = $this->db->query($q);
+		foreach($result->fetch_assoc() as $event) {
+			var_dump($event);
+			echo "<br>";
+		}
 	}
 }
 ?>
