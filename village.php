@@ -6,11 +6,14 @@ class Village {
 	public $resources;
 	public $db;
 	public $capacity;
+	public $foodGain;
 	function __construct($_db) {
 		$this->db = $_db;
 		$this->getBuildingsFromDB();
 		$this->getResourcesFromDB();
 		$this->capacity = pow(2, $this->buildings[5]['level'])*100;
+		$this->foodGain = pow(2, $this->buildings[7]['level']) * 0.1;
+		
 	}
 	function getBuildingsFromDB() {
 		$result = $this->db->query("SELECT * FROM `building`;"); //pobierz wszystkie budynki z tabeli building
@@ -83,11 +86,11 @@ class Village {
 		$now = strtotime(date("Y-m-d G:i:s"));
 		$delta_time = $now - $last_refresh;
 		echo "Czas: ".$delta_time;
-
-		$this->resources['food'] += 10*$delta_time;
-		$this->resources['wood'] += 10*$delta_time;
-		$this->resources['iron'] += 10*$delta_time;
-		$this->resources['clay'] += 10*$delta_time;
+		
+		$this->resources['food'] += $delta_time * $this->foodGain;
+		$this->resources['wood'] += $delta_time * pow(2, $this->buildings[10]['level']) * 0.1;
+		$this->resources['iron'] += $delta_time * pow(2, $this->buildings[3]['level']) * 0.1;
+		$this->resources['clay'] += $delta_time * pow(2, $this->buildings[2]['level']) * 0.1;
 		
 		$q = "UPDATE Village SET last_check = NOW(), food = ".$this->resources['food'].", 
 			wood = ".$this->resources['wood'].", iron = ".$this->resources['iron'].",

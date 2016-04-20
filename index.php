@@ -123,13 +123,13 @@ $v->resourceGain();
 			<h3> Surowce/Wojsko </h3>
 			<table class="table">
 			<tr><th>Nazwa surowca</th><th>Ilosc</th><th>Przyrost /min</th></tr>
-			<tr><td>Jedzenie</td><td><?php echo $wioska['food'].' / '.$v->capacity; ?></td>
-				<td><?php echo (pow(2, $zagroda['level'])*15)/60; ?></td></tr>
-			<tr><td>Drewno</td><td><?php echo $wioska['wood'].' / '.$v->capacity; ?></td>
+			<tr><td>Jedzenie</td><td><?php echo $v->resources['food'].' / '.$v->capacity; ?></td>
+				<td><?php echo $v->foodGain*60; ?></td></tr>
+			<tr><td>Drewno</td><td><?php echo $v->resources['wood'].' / '.$v->capacity; ?></td>
 				<td>20</td></tr>
-			<tr><td>Zelazo</td><td><?php echo $wioska['iron'].' / '.$v->capacity; ?></td>
+			<tr><td>Zelazo</td><td><?php echo $v->resources['iron'].' / '.$v->capacity; ?></td>
 				<td>20</td></tr>
-			<tr><td>Glina</td><td><?php echo $wioska['clay'].' / '.$v->capacity; ?></td>
+			<tr><td>Glina</td><td><?php echo $v->resources['clay'].' / '.$v->capacity; ?></td>
 				<td>20</td></tr>
 			<tr><th>Jednostka</th><th>Liczebnosc</th><th>Morale</th></tr>
 			<tr><td>Pikinierzy</td><td>115/1000</td><td>20</td></tr>
