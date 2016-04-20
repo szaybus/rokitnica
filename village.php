@@ -85,11 +85,7 @@ class Village {
 			$this->resources['iron'] -= $ironReq;
 			$this->resources['clay'] -= $clayReq;
 			$this->setResourcesInDB();	
-			/*zwiększ level budynku
-			$q = "UPDATE building SET
-			level = level+1
-			WHERE id_building=".$_id;
-			$this->db->query($q);*/
+			
 			$end = strtotime(date("Y-m-d G:i:s")) + 120;
 			$endTimestamp = date("Y-m-d G:i:s", $end);
 			$q = "INSERT INTO event_building (event_end, id_building) VALUES ('$endTimestamp', $_id)";
@@ -129,9 +125,14 @@ class Village {
 		//pobierz te eventy których czas wykonania już minął
 		$q = "SELECT * FROM event_building WHERE event_end < NOW();";
 		$result = $this->db->query($q);
-		foreach($result->fetch_assoc() as $event) {
-			var_dump($event);
-			echo "<br>";
+		while($event = $result->fetch_assoc()) {
+			/*zwiększ level budynku*/
+			$q = "UPDATE building SET
+			level = level+1
+			WHERE id_building=".$event['id_building'];
+			$this->db->query($q);
+			$q = "DELETE FROM event_building WHERE id_event = ".$event['id_event'];
+			$this->db->query($q);
 		}
 	}
 }
