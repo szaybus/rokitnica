@@ -84,11 +84,15 @@ class Village {
 			$this->resources['iron'] -= $ironReq;
 			$this->resources['clay'] -= $clayReq;
 			$this->setResourcesInDB();	
-			//zwiększ level budynku
+			/*zwiększ level budynku
 			$q = "UPDATE building SET
 			level = level+1
 			WHERE id_building=".$_id;
-			$this->db->query($q);
+			$this->db->query($q);*/
+			$end = strtotime(date("Y-m-d G:i:s")) + 120;
+			$endTimestamp = date("Y-m-d G:i:s", $end);
+			$q = "INSERT INTO event_building (event_end, id_building) VALUES ('$endTimestamp', $_id)";
+			$this->db($q);
 		}
 	}
 	function resourceGain() {
