@@ -36,6 +36,15 @@ class Village {
 		$this->resources['iron'] = $wiersz['iron'];
 		$this->resources['food'] = $wiersz['food'];
 	}
+	function setResourcesInDB () {
+		$q = "UPDATE village SET
+			food = ". $this->resources['food'] .",
+			wood = ". $this->resources['wood'] .",
+			iron = ". $this->resources['iron'] .",
+			clay = ". $this->resources['clay'] ."
+			WHERE id_village = 1;";
+		$this->db->query($q);
+	}
 	function showBuildings() {
 		//var_dump($this->buildings);
 		echo '<table class="table">';
@@ -70,12 +79,11 @@ class Village {
 		if($this->resources['food'] > $foodReq && $this->resources['wood'] > $woodReq
 		&& $this->resources['iron'] > $ironReq && $this->resources['clay'] > $clayReq) {
 			//zdejmij surowce ze stanu
-			$q = "UPDATE village SET
-			food = food-". $foodReq .",
-			wood = wood-". $woodReq .",
-			iron = iron-". $ironReq .",
-			clay = clay-". $clayReq .";";
-			$this->db->query($q);	
+			$this->resources['food'] -= $foodReq;
+			$this->resources['wood'] -= $woodReq;
+			$this->resources['iron'] -= $ironReq;
+			$this->resources['clay'] -= $clayReq;
+			$this->setResourcesInDB();	
 			//zwiększ level budynku
 			$q = "UPDATE building SET
 			level = level+1
@@ -110,11 +118,7 @@ class Village {
 		if($this->resources['clay'] > $this->capacity) { //przekroczyliśmy magazyn
 			$this->resources['clay'] = $this->capacity;
 		}
-		$q = "UPDATE Village SET last_check = NOW(), food = ".$this->resources['food'].", 
-			wood = ".$this->resources['wood'].", iron = ".$this->resources['iron'].",
-			clay = ".$this->resources['clay']." WHERE id_village = 1;";
-			echo $q;
-		$this->db->query($q);
+		$this->setResourcesInDB();
 	}
 }
 ?>
