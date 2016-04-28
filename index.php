@@ -1,12 +1,15 @@
 ﻿<?php include "db.php"; 
 	include "village.php";
+	include "squad.php";
 $v = new Village($conn);
 
 if(isset($_REQUEST['ulepszBudynekId'])) {
 	$v->upgradeBuilding($_REQUEST['ulepszBudynekId']);
 }
 $v->resourceGain();
-
+$s= new Squad ($conn);
+$s->squadAttack(1,3);
+$s->squadBack();
 	?>
 <!DOCTYPE html>
 <html lang="en">
