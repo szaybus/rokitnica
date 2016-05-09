@@ -1,4 +1,4 @@
-﻿<?php include "db.php"; 
+﻿<?php include "db.php";
 	include "village.php";
 	include "squad.php";
 $v = new Village($conn);
@@ -8,8 +8,8 @@ if(isset($_REQUEST['ulepszBudynekId'])) {
 }
 $v->resourceGain();
 $s= new Squad ($conn);
-$s->squadAttack(1,3);
-$s->squadBack();
+//$s->squadAttack(1,3);
+//$s->squadBack();
 	?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,31 +18,43 @@ $s->squadBack();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+    <title>Rokitnica</title>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script>
-	function loadDoc(id_budynku) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (xhttp.readyState == 4 && xhttp.status == 200) {
-      document.getElementById("own-modal").innerHTML = xhttp.responseText;
-    }
-  };
-  xhttp.open("GET", "dzialanie.php?id="+id_budynku, true);
-  xhttp.send();
-}
-	function openDetails(id_budynku) {
-		loadDoc(id_budynku);
-		document.getElementById("own-overlay").style.display = "block";
-		document.getElementById("own-modal").style.display = "block";
-	}
-	function closeDetails() {
-
-		document.getElementById("own-overlay").style.display = "none";
-		document.getElementById("own-modal").style.display = "none";
+	$(function() {
+		$("map[name=wioska] area").click(function(){
+		var buildingID = $(this).attr('id');
+		$.ajax({
+			method: "POST",
+			url: "building.php",
+			data: 'building='+buildingID,
+			success: function(data) {
+				$("#myModal").modal();
+				$('#myModal .modal-content').html(data);
+			}
+		});
+		});
+	});
+	function rescaleImageMap() {
+			var scale = parseInt(document.getElementById('villageBackground').width)/800;
+			$("map area").each(function(index, element) {
+				console.log(element);
+				var coordString = element.coords;
+				var coordArray = new Array();
+				coordArray = coordString.split(',');
+				coordString = "";
+				for (i = 0; i < coordArray.length; i++) {
+					coordArray[i] = Math.floor(coordArray[i]* scale);
+					coordString += coordArray[i];
+					if(i<coordArray.length-1) {coordString += ","};
+				}
+				element.coords = coordString;
+			});
 	}
 	</script>
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,7 +63,7 @@ $s->squadBack();
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body onload="rescaleImageMap()">
     <nav class="navbar navbar-default">
 		<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -83,17 +95,25 @@ $s->squadBack();
 						</ul>
 					</li>
 				</ul>
-			
+
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#">Wyloguj</a></li>
-					
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</nav>
-	
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+  	<div class="modal-dialog">
+    <!-- Modal content-->
+    	<div class="modal-content">
+    	</div>
+		</div>
+	</div>
 	<div class="container">
 		<div class="row">
+
+			<!-- old map backup
 			<div class="own-overlay" id="own-overlay"></div>
 			<div class="own-modal" id="own-modal" onclick="closeDetails()">I'm the modal window!</div>
 			<div class="col-md-9" style="background-image: url('img/village_background.png'); background-size:100%">
@@ -104,7 +124,7 @@ $s->squadBack();
 			</div>
 			<div class="row">
 			<div class="col-md-2 col-md-offset-2" style="height:100px;"><img src="img/budynki/stajnia.png" alt="tekst alternatywny" title="Stajnia" width="60" height="61"></div>
-			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/piedestal.png" alt="tekst alternatywny" title="Piedesta�" width="60" height="61"></div>
+			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/piedestal.png" alt="tekst alternatywny" title="Piedesta�" width="60" height="61"></div>
 			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/farma.png" alt="tekst alternatywny" title="Farma" width="60" height="61"></div>
 			</div>
 			<div class="row">
@@ -119,9 +139,18 @@ $s->squadBack();
 			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/kopalnia_gliny.png" alt="tekst alternatywny" title="Kopalnia gliny" width="60" height="61"></div>
 			</div>
 				<div class="col-md-2 col-md-offset-4" style="height:100px;"><img src="img/budynki/koszary.png" alt="tekst alternatywny" title="Koszary" width="60" height="61"></div>
-			<div class="col-md-2" style="height:100px;"><img src="img/budynki/kamieniolom.png" alt="tekst alternatywny" title="Kamienio�om" width="60" height="61"></div>
+			<div class="col-md-2" style="height:100px;"><img src="img/budynki/kamieniolom.png" alt="tekst alternatywny" title="Kamienio�om" width="60" height="61"></div>
 			</div>
-			
+			-->
+			<div class="col-sm-12 col-md-9">
+				<img src="img/village_full.jpg" class="col-sm-12" usemap="#wioska" id="villageBackground" style="padding:0px;">
+				<map name="wioska">
+					<area class="map-area" shape="rect" coords="410,110,525,230" href="#" id="Ratusz" alt="Ratusz">
+					<area class="map-area" shape="rect" coords="535,305,625,380" href="#" id="Koszary" alt="Koszary">
+					<area class="map-area" shape="poly" coords="630,500,700,440,750,490,685,550" href="#" id="Tartak" alt="Tartak">
+					<area class="map-area" shape="poly" coords="0,420,90,420,195,500,100,600,0,600" href="#" id="Cegielnia" alt="Cegielnia">
+				</map>
+			</div>
 			<div class="col-md-3">
 			<h3> Surowce/Wojsko </h3>
 			<table class="table">
@@ -139,7 +168,7 @@ $s->squadBack();
 			<tr><td>Topornicy</td><td>115/1000</td><td>20</td></tr>
 			</table>
 			</div>
-		
+
 			<!--
 				<div class="col-md-4"> Drewno </div>
 				<div class="col-md-4"> Ilość</div>
@@ -159,10 +188,9 @@ $s->squadBack();
 			</div>
 
 	</div>
-	
+
 	</div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
   </body>

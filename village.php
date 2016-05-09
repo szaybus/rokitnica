@@ -62,12 +62,11 @@ class Village {
 	}
 	function showBuildings() {
 		//var_dump($this->buildings);
-		echo '<table class="table">';
-		echo '<tr><td>nazwa</td><td>typ</td><td>level</td><td>ulepsz</td>';
+		echo '<table class="table table-hover">';
+		echo '<tr><td>Nazwa:</td><td>Poziom:</td><td>Ulepszenia:</td>';
 		foreach ($this->buildings as $b) {
 			echo '<tr>';
 			echo '<td>'.$b['name'].'</td>';
-			echo '<td>'.$b['type'].'</td>';
 			echo '<td>'.$b['level'].'</td>';
 			//sprawdz czy mozemy ulepszyć
 			$foodReq = $b['level']*0;
