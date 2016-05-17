@@ -21,38 +21,7 @@ $s= new Squad ($conn);
     <title>Rokitnica</title>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script>
-	$(function() {
-		$("map[name=wioska] area").click(function(){
-		var buildingID = $(this).attr('id');
-		$.ajax({
-			method: "POST",
-			url: "building.php",
-			data: 'building='+buildingID,
-			success: function(data) {
-				$("#myModal").modal();
-				$('#myModal .modal-content').html(data);
-			}
-		});
-		});
-	});
-	function rescaleImageMap() {
-			var scale = parseInt(document.getElementById('villageBackground').width)/800;
-			$("map area").each(function(index, element) {
-				console.log(element);
-				var coordString = element.coords;
-				var coordArray = new Array();
-				coordArray = coordString.split(',');
-				coordString = "";
-				for (i = 0; i < coordArray.length; i++) {
-					coordArray[i] = Math.floor(coordArray[i]* scale);
-					coordString += coordArray[i];
-					if(i<coordArray.length-1) {coordString += ","};
-				}
-				element.coords = coordString;
-			});
-	}
-	</script>
+	<script src="js/rokitnica.js"></script>
     <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
@@ -112,36 +81,6 @@ $s= new Squad ($conn);
 	</div>
 	<div class="container">
 		<div class="row">
-
-			<!-- old map backup
-			<div class="own-overlay" id="own-overlay"></div>
-			<div class="own-modal" id="own-modal" onclick="closeDetails()">I'm the modal window!</div>
-			<div class="col-md-9" style="background-image: url('img/village_background.png'); background-size:100%">
-			<div style="height:100px"></div>
-			<div class="row">
-			<div class="col-md-2 col-md-offset-4" onclick="openDetails(1)" style="height:100px;"><img src="img/budynki/cegielnia.png" alt="tekst alternatywny" title="Cegielnia" width="60" height="61"></div>
-			<div class="col-md-2" onclick="openDetails(2)" style="height:100px;"><img src="img/budynki/ratusz.png" alt="tekst alternatywny" title="Ratusz" width="60" height="61"></div>
-			</div>
-			<div class="row">
-			<div class="col-md-2 col-md-offset-2" style="height:100px;"><img src="img/budynki/stajnia.png" alt="tekst alternatywny" title="Stajnia" width="60" height="61"></div>
-			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/piedestal.png" alt="tekst alternatywny" title="Piedesta�" width="60" height="61"></div>
-			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/farma.png" alt="tekst alternatywny" title="Farma" width="60" height="61"></div>
-			</div>
-			<div class="row">
-			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/piekarnia.png" alt="tekst alternatywny" title="Piekarnia" width="60" height="61"></div>
-			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/zbrojownia.png" alt="tekst alternatywny" title="Zbrojownia" width="60" height="61"></div>
-			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/spichlerz.png" alt="tekst alternatywny" title="Spichlerz" width="60" height="61"></div>
-			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/tartak.png" alt="tekst alternatywny" title="Tartak" width="60" height="61"></div>
-			</div>
-				<div class="row">
-			<div class="col-md-2 col-md-offset-2" style="height:100px;"><img src="img/budynki/kopalnia_zelaza.png" alt="tekst alternatywny" title="Kopalnia zelaza" width="60" height="61"></div>
-			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/huta_stali.png" alt="tekst alternatywny" title="Huta stali" width="60" height="61"></div>
-			<div class="col-md-2 col-md-offset-1" style="height:100px;"><img src="img/budynki/kopalnia_gliny.png" alt="tekst alternatywny" title="Kopalnia gliny" width="60" height="61"></div>
-			</div>
-				<div class="col-md-2 col-md-offset-4" style="height:100px;"><img src="img/budynki/koszary.png" alt="tekst alternatywny" title="Koszary" width="60" height="61"></div>
-			<div class="col-md-2" style="height:100px;"><img src="img/budynki/kamieniolom.png" alt="tekst alternatywny" title="Kamienio�om" width="60" height="61"></div>
-			</div>
-			-->
 			<div class="col-sm-12 col-md-9">
 				<img src="img/village_full.jpg" class="col-sm-12" usemap="#wioska" id="villageBackground" style="padding:0px;">
 				<map name="wioska">
@@ -149,6 +88,7 @@ $s= new Squad ($conn);
 					<area class="map-area" shape="rect" coords="535,305,625,380" href="#" id="Koszary" alt="Koszary">
 					<area class="map-area" shape="poly" coords="630,500,700,440,750,490,685,550" href="#" id="Tartak" alt="Tartak">
 					<area class="map-area" shape="poly" coords="0,420,90,420,195,500,100,600,0,600" href="#" id="Cegielnia" alt="Cegielnia">
+					<area class="map-area" shape="poly" coords="295,215,370,185,435,265,410,315,310,305" href="#" id="Rynek" alt="Rynek">
 				</map>
 			</div>
 			<div class="col-md-3">
