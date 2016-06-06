@@ -113,7 +113,7 @@ $s= new Squad ($conn);
 				<div class="col-md-4"> Drewno </div>
 				<div class="col-md-4"> Ilość</div>
 				<div class="col-md-4"> Ilość/min</div>
-				<div class="col-md-4"> Żelazo </div>
+				<div class="col-md-4"> Żelazodiv </div>
 				<div class="col-md-4"> Ilość</div>
 				<div class="col-md-4"> Ilość/min</div>
 				<div class="col-md-4"> Cegły </div>
@@ -126,8 +126,39 @@ $s= new Squad ($conn);
 				<div class="col-md-8"> Łucznicy </div>
 				<div class="col-md-4"> Ilość </div> -->
 			</div>
+			<div class="row">
+				<table class="table">
+				<?php
 
+				$map = Array();
+
+				$q = "SELECT pozY,pozX,terrainType FROM map WHERE pozX BETWEEN $v->pozX-2 AND $v->pozX+2
+							AND pozY BETWEEN $v->pozY-2 AND $v->pozY+2;";
+				$result = $v->db->query($q);
+				while($row = $result->fetch_assoc()) {
+					$map[$row['pozX']][$row['pozY']] = $row['terrainType'];
+				}
+				$q = "SELECT pozY,pozX FROM village WHERE pozX BETWEEN $v->pozX-2 AND $v->pozX+2
+							AND pozY BETWEEN $v->pozY-2 AND $v->pozY+2;";
+				$result = $v->db->query($q);
+				while($row = $result->fetch_assoc()) {
+					$map[$row['pozX']][$row['pozY']] = 'Village';
+				}
+				//print_r($v->pozY);
+				for ($i=$v->pozY+2; $i > $v->pozY-3; $i--) {
+					echo '<tr>';
+					for ($j=$v->pozX-2; $j < $v->pozX+3; $j++) {
+						if(isset($map[$j][$i])) {
+							echo '<td>'.$map[$j][$i].'</td>';
+						} else echo '<td>('.$j.', '.$i.')</td>';
+					}
+					echo '</tr>';
+				}
+			 	?>
+		 		</table>
+			</div>
 	</div>
+
 
 	</div>
 

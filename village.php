@@ -5,6 +5,8 @@ class Village {
 	public $buildings;
 	public $resources;
 	public $db;
+	public $pozX;
+	public $poxY;
 	public $capacity;
 	public $foodGain;
 	public $woodGain;
@@ -27,6 +29,14 @@ class Village {
 		$this->ironGain = pow(2, $this->buildings[3]['level']) * 0.1;
 		$this->clayGain = pow(2, $this->buildings[2]['level']) * 0.1;
 		$this->resourceGain();
+		$this->getPositionFromDB();
+	}
+	function getPositionFromDB() {
+		$q = "SELECT pozX, pozY FROM village WHERE id_village = $this->id;";
+		$result = $this->db->query($q);
+		$row = $result->fetch_assoc();
+		$this->pozX = $row['pozX'];
+		$this->pozY = $row['pozY'];
 	}
 	function getBuildingsFromDB() {
 		// Pobierz budynki z bazy danych do tablicy
